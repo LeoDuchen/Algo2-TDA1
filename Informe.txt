@@ -1,0 +1,43 @@
+-Primera Sección
+
+Lo entregado es el TDA (Tipo de Dato Abstracto) lista, con sus derivados: pila y cola. Lo principal es la lista simplemente enlazada. Esta lista tiene nodos, cada nodo tiene un elemento y tiene un puntero al siguiente nodo. El último nodo apunta a NULL. También tenemos los TDA iteradores (externo e interno).
+
+Para compilar lo entregado, tenemos que tener C instalado. Ahora movemos todos los archivos (pruebas.c, lista.c, lista.h y pa2mm.h -Un saludo a Lucas por haber prestado este archivo para el TDA-) al Escritorio para que sean más faciles de ubicar. En la terminal se escribe:
+
+	ls -> Esto es para saber donde estamos parados.
+
+Saldrá una lista con los nombres de las carpetas que tenemos, una de ellas sera el Escritorio.
+
+	cd Escritorio -> Para poder acceder al Escritorio en la terminal. (Desktop si tenes el sistema operativo en inglés).
+
+Ahora, ubicados en el Escritorio, podemos compilar el programa.
+
+gcc *.c -o lista_se -g -std=c99 -Wconversion -Wtype-limits -pedantic -Werror -O0 -> El gcc es el lenguaje C, el *.c dice que compile todos los archivos que terminen en .c, lista_se es el nombre del compilado y lo demás son los flags de warning para el código.
+
+Con la siguiente línea ejecutamos el programa:
+
+./lista_se
+
+Si queremos ver si el programa pierde memoria o tiene errores, podemos correr Valgrind con la siguiente línea:
+
+valgrind --leak-check=full --track-origins=yes --show-reachable=yes ./lista_se
+
+El código funciona creando una lista primero (reservando la memoria necesaria), esta lista tiene un nodo inicial y uno final, que apuntaran al primer y último nodo, respectivamente. Podes usar la función insertar un elemento que por defecto lo inserta al final de la lista, o podes usar la función que inserta en la posición que le indiques. Estas dos funciones crean los nodos, reservandoles memoria. También estan dos funciones (que se podria decir que son lo contrario a estas dos mencionadas), una borra el último elemento de la lista y otra borra el elemento dependiendo la posición que le pasen, si no existe la posición borrará el último elemento. 
+Hay otras funciones que son para saber la posición de un elemento, cual es el último elemento, cual es la cantidad de elementos y si esta vacía la lista. La función lista_destruir libera los nodos existentes y luego libera la lista.
+
+Tenemos funciones para pila y cola, las cuales apilan-desapilan y encolan-desencolan respectivamente. La pila tiene una función que nos devuelve el tope de esta, y la cola tiene una función que nos devuelve el primer elemento en la cola.
+
+Al final del código tenemos los TDA iteradores. El primero es el iterador externo que provee un set de primitivas especiales para recorrer una estructura, en este caso la lista. Las funciones son: crear el iterador, devolver si tiene siguiente o no (O sea, si el siguiente es NULL), avanzar iterador, devolver el elemento actual y destruir iterador. El segundo es el iterador interno que permite recorrer todos los elementos de un TDA sin tener que controlar el ciclo en el cual se recorre el mismo. Recibe una función, y recorre el TDA, en este caso la lista, llamando a esta función hasta que devuelva false o ya no haya elementos que iterar.
+
+Elegí esta implementación porque es la que me pudo salir. Intenté hacer recursivamente algunas funciones (como lista_destruir) pero no me salieron.
+Faltan constantes, como return 0 en funciones que devuelven size_t significa error, pero decidí no ponerla como constante ya que sería confuso porque tengo las constantes ERROR -1 y EXITO 0.
+En el pruebas.c creo que hice pruebas suficientes para casos concretos, tenía la intención de agregar más (como iterar 1000 elementos) pero no me parecio tan necesario, ya que andaba con iterar 3 o 4 elementos.
+
+-Segunda Sección
+
+Lo que entiendo por lista es una estructura de datos con nodos enlazados. La lista simplemente enlazada tiene nodos con punteros al siguiente, mientras que la lista doblemente enlazada tiene nodos con punteros al siguiente y al anterior.
+
+Las características fundamentales de las pilas son que tiene un tope, donde los elementos se apilan y desapilan. Siempre por el tope se hace esto. Esto es LIFO (Last in, First out).
+Las colas tienen dos extremos, un inicio y un final. Por el inicio se desencolan y por el final se encolan. Esto es FIFO (First in, First out).
+
+Un iterador es un TDA que permite recorrer secuencialmente los datos almacenados en un TDA. Ya explique arriba que hay dos tipos y lo que son, el externo e interno. La diferencia entre uno y otro, es que el externo son varías funciones para poder recorrer un TDA mientras que el interno es una sola que recibe una condición para recorrer los elementos de un TDA.
